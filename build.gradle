@@ -1,0 +1,79 @@
+plugins {
+    id 'fabric-loom' version '1.12.7'
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    implementation "org.java-websocket:Java-WebSocket:1.6.0"
+    implementation "com.formdev:flatlaf:3.6.1"
+    implementation "com.google.code.gson:gson:2.12.1"
+    implementation "org.json:json:20231013"
+    implementation "org.lwjgl:lwjgl:3.3.3"
+    implementation "org.lwjgl:lwjgl:3.3.3:natives-windows"
+    implementation "org.lwjgl:lwjgl-nanovg:3.3.3"
+    implementation "org.lwjgl:lwjgl-nanovg:3.3.3:natives-windows"
+
+    implementation files('libs/mod-api-1.0.1.jar')
+
+    include "org.java-websocket:Java-WebSocket:1.6.0"
+    include "com.formdev:flatlaf:3.6.1"
+    include "com.google.code.gson:gson:2.12.1"
+    include "org.json:json:20231013"
+    include "org.lwjgl:lwjgl:3.3.3"
+    include "org.lwjgl:lwjgl:3.3.3:natives-windows"
+    include "org.lwjgl:lwjgl-nanovg:3.3.3"
+    include "org.lwjgl:lwjgl-nanovg:3.3.3:natives-windows"
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/evon.accesswidener")
+}
+
+processResources {
+    inputs.property "version", project.version
+    filesMatching("fabric.mod.json") {
+        expand "version": inputs.properties.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+    it.options.compilerArgs += ['-Xmaxerrs', '10000']
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            artifactId = project.archives_base_name
+            from components.java
+        }
+    }
+    repositories {
+    }
+}

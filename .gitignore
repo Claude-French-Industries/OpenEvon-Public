@@ -1,0 +1,35 @@
+# ---- Build output ----
+build/
+.gradle/
+out/
+*.class
+
+# ---- Minecraft dev run directories (worlds, assets, logs, caches) ----
+run/
+runtest/
+
+# ---- Logs and crash dumps ----
+logs/
+crash-reports/
+*.log
+
+# ---- IDEs ----
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+nbproject/
+
+# ---- OS junk ----
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ---- Local tooling / backups ----
+*.bak
+*.orig
+*.rej
